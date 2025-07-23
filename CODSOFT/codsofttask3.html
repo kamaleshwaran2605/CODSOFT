@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animated Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      transition: background 0.5s ease;
+    }
+
+    .calculator {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      width: 320px;
+      backdrop-filter: blur(15px);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .display {
+      background: #222;
+      color: #fff;
+      font-size: 2.2rem;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: right;
+      margin-bottom: 20px;
+      overflow: hidden;
+      animation: slideDown 1s ease;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .buttons button {
+      padding: 20px;
+      font-size: 1.3rem;
+      border: none;
+      border-radius: 12px;
+      background: #e0e0e0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .buttons button:hover {
+      background: #d1d1d1;
+      transform: scale(1.05);
+    }
+
+    .buttons .operator {
+      background: #5c6bc0;
+      color: white;
+    }
+
+    .buttons .equal {
+      background: #66bb6a;
+      color: white;
+      grid-column: span 2;
+    }
+
+    .buttons .clear {
+      background: #ef5350;
+      color: white;
+      grid-column: span 2;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes slideDown {
+      0% { transform: translateY(-20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button class="operator" onclick="appendValue('/')">/</button>
+      <button class="operator" onclick="appendValue('*')">*</button>
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button class="operator" onclick="appendValue('-')">-</button>
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button class="operator" onclick="appendValue('+')">+</button>
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+      <button onclick="appendValue('0')">0</button>
+      <button onclick="appendValue('.')">.</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    let input = '';
+
+    function appendValue(value) {
+      if (input.length < 20) {
+        input += value;
+        display.innerText = input;
+      }
+    }
+
+    function clearDisplay() {
+      input = '';
+      display.innerText = '0';
+    }
+
+    function calculate() {
+      try {
+        const result = eval(input);
+        display.innerText = result;
+        input = result.toString();
+      } catch (e) {
+        display.innerText = 'Error';
+        input = '';
+      }
+    }
+  </script>
+
+</body>
+</html>
